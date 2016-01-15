@@ -17,6 +17,7 @@ namespace psych_game_data_transformer
             InitializeComponent();
             ddlGames.Items.Add("SOPT");
             ddlGames.Items.Add("Xylophone");
+            ddlGames.Items.Add("Whackamole");
             ddlGames.SelectedIndex = 0;
         }
 
@@ -77,7 +78,7 @@ namespace psych_game_data_transformer
                 try
                 {
                     new SoptTransformer().Transform(
-                        folderInputBrowser.SelectedPath, folderInputBrowser.SelectedPath);
+                        folderInputBrowser.SelectedPath, folderOutputBrowser.SelectedPath);
                     MessageBox.Show("SOPT transformation done.");
                 } catch (Exception ex)
                 {
@@ -89,10 +90,22 @@ namespace psych_game_data_transformer
                 try
                 {
                     new XylophoneTransformer().Transform(
-                        folderInputBrowser.SelectedPath, folderInputBrowser.SelectedPath);
+                        folderInputBrowser.SelectedPath, folderOutputBrowser.SelectedPath);
                     MessageBox.Show("Xylophone transformation done.");
                 }
                 catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+            else if(ddlGames.Text == "Whackamole")
+            {
+                try
+                {
+                    new WhackaMoleTransformer().Transform(
+                        folderInputBrowser.SelectedPath, folderOutputBrowser.SelectedPath);
+                }
+                catch(Exception ex)
                 {
                     MessageBox.Show(ex.Message.ToString());
                 }
