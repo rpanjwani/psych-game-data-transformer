@@ -28,7 +28,7 @@ namespace psych_game_data_transformer
         {
             var files = Directory.GetFiles(inputFolderpath);
             var rowContent = new StringBuilder();
-            foreach (var file in files.Where(x => x.EndsWith(".xyl")).OrderByDescending(x => x))
+            foreach (var file in files.Where(x => x.EndsWith(".xyl")).OrderBy(x => x))
             {
                 var subId = getSubjectId(file);
                 rowContent.Append(getTransformedFileData(subId, file));

@@ -25,16 +25,21 @@ namespace psych_game_data_transformer
 
         private void processDirectory(string inputFolderpath, string outputFolderPath)
         {
+            File.Delete(outputFolderPath + "\\" + OutputFileName);
             var files = Directory.GetFiles(inputFolderpath);
-            var rowContent = new StringBuilder();
-            foreach (var file in files.Where(x => x.EndsWith(".txt")).OrderByDescending(x => x))
+            File.AppendAllText(outputFolderPath + "\\" + OutputFileName, getHeader().ToString());
+            foreach (var file in files.Where(x => x.EndsWith(".txt")).OrderBy(x => x))
             {
-                var subId = getSubjectId(file);
-                var sessionId = getSessionId(file);
-                rowContent.Append(getTransformedFileData(subId, sessionId, file));
+                var fileName = Path.GetFileName(file);
+                var subId = getSubjectId(fileName);
+                var sessionId = getSessionId(fileName);
+                try
+                {
+                    File.AppendAllText(outputFolderPath + "\\" + OutputFileName,
+                        getTransformedFileData(subId, sessionId, file));
+                }
+                catch { }
             }
-            var content = getHeader().Append(rowContent).ToString();
-            File.WriteAllText(outputFolderPath + "\\" + OutputFileName, content);
         }
 
         private string getSubjectId(string inputFilePath)
